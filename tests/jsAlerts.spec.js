@@ -21,9 +21,9 @@ test.describe('Test Group', () => {
   });
 
   test('JS Confirmation Alert', async ({ page }) => {
-console.log(`Alert message: ${alert.message()}`);
-expect(alert.message()).toBe("I am a JS Confirm")
     page.on('dialog',async(alert)=>{
+      console.log(`Alert message: ${alert.message}`);
+expect(alert.message()).toBe("I am a JS Confirm");
         await alert.accept();
     });
 
@@ -34,15 +34,12 @@ expect(alert.message()).toBe("I am a JS Confirm")
 
   test('JS Prompt Alert', async ({ page }) => {
     page.on('dialog',async(alert)=>{
-      expect(alert.message).toBegin("I am a JS prompt");
-      await alert.accept("CYDEO SCHOOL");
-  });
-
-    let clickForJsPrompt=page.locator("//button[@onclick='jsPrompt()']");
+      expect(alert.message()).toBe("I am a JS prompt");
+      await alert.accept("Cydeo School");
+    });
+    let clickForJsPrompt = page.locator("button[onclick='jsPrompt()']");
     await clickForJsPrompt.click();
-    await page.waitForTimeout(3000);
-
-    expect(page.locator("//p[@id='result']")).toHaveText("You entered: CYDEO SCHOOL");
-    //expect(page.locator("//p[@id='result']")).toContain("CYDEO SCHOOL");
+    await expect(page.locator("#result")).toHaveText("You entered: Cydeo School");;
+    //expect(page.locator("//p[@id='result']")).toContain("Cydeo School");
   });
 });
